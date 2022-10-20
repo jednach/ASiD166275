@@ -161,34 +161,21 @@ class Queue:
         return self.head.value
 
     def enqueue(self, value):
-        self.head = Node(value, self.head)
+        if self.head is None:
+            self.head = Node(value, self.head)
+        else:
+            i = self.head
+            while i.next:
+                i = i.next
+            i.next = Node(value, None)
 
     def dequeue(self):
         if self.head is None:
             print("lista jest pusta brak elementow do usuniecia")
             return
-
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-
-        j = self.head
-        if len == 1:
-            a = j.value
-            self.head = None
-            return a
-
-        k = 0
-        while j:
-            if k == len - 2:
-                a = j.next.value
-                j.next = None
-                break
-            k += 1
-            j = j.next
-        return a
+        temp = self.head.value
+        self.head = self.head.next
+        return temp
 
     def __len__(self):
         len = 0
@@ -269,5 +256,11 @@ assert len(queue) == 0
 queue.enqueue('klient1')
 queue.enqueue('klient2')
 queue.enqueue('klient3')
-print(str(queue))
+
 assert str(queue) == 'klient1, klient2, klient3'
+
+client_first = queue.dequeue()
+
+assert client_first == 'klient1'
+assert str(queue) == 'klient2, klient3'
+assert len(queue) == 2
