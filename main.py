@@ -34,7 +34,7 @@ class LinkedList:
         j = self.head
         k = 0
         while j:
-            if (k == index):
+            if k == index:
                 return j.value
             k += 1
             j = j.next
@@ -77,8 +77,14 @@ class LinkedList:
         while i:
             len += 1
             i = i.next
-        k = 0
+
         j = self.head
+        if len == 1:
+            a = j.value
+            self.head = None
+            return a
+
+        k = 0
         while j:
             if k == len - 2:
                 a = j.next.value
@@ -137,16 +143,9 @@ class LinkedList:
 
 ll = LinkedList()
 
-ll.push(1)
-ll.append(3)
-ll.push(0)
-#print(ll.node(2))
-ll.insert(2,1)
-print(ll.len())
+ll.push(11)
+ll.push(12)
 ll.print()
-#print(ll.pop())
-#print(ll.remove_last())
-print(ll.remove(1))
-print(ll.len())
+print(ll.remove_last())
+print(ll.remove_last())
 ll.print()
-
