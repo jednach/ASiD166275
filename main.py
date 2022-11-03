@@ -1,266 +1,76 @@
-class Node:
-    def __init__(self, value, next):
-        self.value = value
-        self.next = next
-
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def push(self, value):
-        self.head = Node(value, self.head)
-
-    def append(self, value):
-        if self.head is None:
-            self.head = Node(value, self.head)
-        else:
-            i = self.head
-            while i.next:
-                i = i.next
-            i.next = Node(value, None)
-
-    def node(self, index):
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-
-        if self.head is None or len - 1 < index:
-            print("lista jest pusta lub krotsza od podanej wartosci")
-            return
-
-        j = self.head
-        k = 0
-        while j:
-            if k == index:
-                return j
-            k += 1
-            j = j.next
-
-    def insert(self, value, wezel):
-        if self.head is None:
-            print("lista jest pusta lub krotsza od podanej wartosci")
-            return
-
-        wezel.next = Node(value, wezel.next)
-
-    def __len__(self):
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-        return len
-
-    def pop(self):
-        if self.head is None:
-            print("lista jest pusta brak elementow do usuniecia")
-            return
-        temp = self.head.value
-        self.head = self.head.next
-        return temp
-
-    def remove_last(self):
-        if self.head is None:
-            print("lista jest pusta brak elementow do usuniecia")
-            return
-
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-
-        j = self.head
-        if len == 1:
-            a = j.value
-            self.head = None
-            return a
-
-        k = 0
-        while j:
-            if k == len - 2:
-                a = j.next.value
-                j.next = None
-                break
-            k += 1
-            j = j.next
-        return a
-
-    def remove(self, wezel):
-
-        if self.head is None:
-            print("lista jest pusta lub zbyt krotka by mozliwe bylo usuniecie danego wezla")
-            return
-        wezel.next = wezel.next.next
-
-    def __str__(self):
-        if self.head is None:
-            return "lista jest pusta"
-
-        i = self.head
-        llstr = ''
-
-        while i:
-            if i.next is None:
-                llstr += str(i.value)
-            else:
-                llstr += str(i.value) + ' -> '
-            i = i.next
-
-        return llstr
-
-
-class Stack:
-    def __init__(self):
-        self.head = None
-
-    def push(self, value):
-        self.head = Node(value, self.head)
-
-    def pop(self):
-        if self.head is None:
-            print("lista jest pusta brak elementow do usuniecia")
-            return
-        temp = self.head.value
-        self.head = self.head.next
-        return temp
+def numbers(n):
+    if n == 0:
+        print(n)
+        return
+    print(n)
+    return numbers(n - 1)
 
-    def __len__(self):
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-        return len
 
-    def __str__(self):
-        if self.head is None:
-            return "lista jest pusta"
+def power(number, n):
+    if n == 0:
+        return 1
+    return power(number, n - 1) * number
 
-        i = self.head
-        llstr = ''
 
-        while i:
-            if i.next is None:
-                llstr += str(i.value)
-            else:
-                llstr += str(i.value) + ' -> '
-            i = i.next
+def factorial(n):
+    if n == 0:
+        return 1
+    return factorial(n - 1) * n
 
-        return llstr
 
+def fib(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fib(n - 2) + fib(n - 1)
 
-class Queue:
-    def __init__(self):
-        self.head = None
 
-    def peek(self):
-        return self.head.value
+def reverse(n):
+    if len(n) == 1:
+        return n
+    return n[-1] + reverse(n[:-1])
 
-    def enqueue(self, value):
-        if self.head is None:
-            self.head = Node(value, self.head)
-        else:
-            i = self.head
-            while i.next:
-                i = i.next
-            i.next = Node(value, None)
 
-    def dequeue(self):
-        if self.head is None:
-            print("lista jest pusta brak elementow do usuniecia")
-            return
-        temp = self.head.value
-        self.head = self.head.next
-        return temp
+def remove_duplicates(n):
+    if len(n) == 0:
+        return n
+    if len(n) == 1:
+        return n
+    if n[len(n) - 2] == n[len(n) - 1]:
+        return remove_duplicates(n[:-1])
+    return remove_duplicates(n[:-1]) + n[-1]
 
-    def __len__(self):
-        len = 0
-        i = self.head
-        while i:
-            len += 1
-            i = i.next
-        return len
 
-    def __str__(self):
-        if self.head is None:
-            return "lista jest pusta"
+def prime(n, i=2):
+    if n < 2:
+        return False
+    if n == 2:
+        return True
+    if n % i == 0:
+        return False
+    if i * i > n:
+        return True
+    return prime(n, i + 1)
 
-        i = self.head
-        llstr = ''
 
-        while i:
-            if i.next is None:
-                llstr += str(i.value)
-            else:
-                llstr += str(i.value) + ', '
-            i = i.next
+def generate_parentheses(n, open, close, s, ans):
+    if open == n/2 and close == n/2:
+        ans.append(s)
+        return
 
-        return llstr
+    if open < n:
+        generate_parentheses(n, open + 1, close, s + "(", ans)
 
+    if close < open:
+        generate_parentheses(n, open, close + 1, s + ")", ans)
 
-list_ = LinkedList()
 
-assert list_.head == None
-list_.push(1)
-list_.push(0)
-assert str(list_) == '0 -> 1'
+def balanced_parentheses(n):
+    ans = []
+    generate_parentheses(n, 0, 0, "", ans)
 
-list_.append(9)
-list_.append(10)
+    for s in ans:
+        print(s)
 
-assert str(list_) == '0 -> 1 -> 9 -> 10'
 
-middle_node = list_.node(1)
-list_.insert(5, middle_node)
-
-assert str(list_) == '0 -> 1 -> 5 -> 9 -> 10'
-
-first_element = list_.node(0)
-returned_first_element = list_.pop()
-
-assert first_element.value == returned_first_element
-
-last_element = list_.node(3)
-returned_last_element = list_.remove_last()
-
-assert last_element.value == returned_last_element
-assert str(list_) == '1 -> 5 -> 9'
-
-second_node = list_.node(1)
-list_.remove(second_node)
-
-assert str(list_) == '1 -> 5'
-stack = Stack()
-
-assert len(stack) == 0
-
-stack.push(3)
-stack.push(10)
-stack.push(1)
-
-assert len(stack) == 3
-
-top_value = stack.pop()
-assert top_value == 1
-
-assert len(stack) == 2
-
-queue = Queue()
-
-assert len(queue) == 0
-
-queue.enqueue('klient1')
-queue.enqueue('klient2')
-queue.enqueue('klient3')
-
-assert str(queue) == 'klient1, klient2, klient3'
-
-client_first = queue.dequeue()
-
-assert client_first == 'klient1'
-assert str(queue) == 'klient2, klient3'
-assert len(queue) == 2
